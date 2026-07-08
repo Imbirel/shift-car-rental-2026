@@ -1,0 +1,19 @@
+<div class="catalog-content">
+  <app-catalog-header />
+
+  <tui-loader [loading]="api.isLoading()" [overlay]="true">
+    @if (api.hasError()) {
+      <div class="error-state">Произошла ошибка при загрузке данных.</div>
+    } @else {
+      <div class="cars-grid">
+        @for (car of api.cars(); track car.id) {
+          <app-car-card [car]="car" (click)="navigateToDetails(car.id)" />
+        } @empty {
+          @if (!api.isLoading()) {
+            <div class="empty-state">Автомобили не найдены.</div>
+          }
+        }
+      </div>
+    }
+  </tui-loader>
+</div>

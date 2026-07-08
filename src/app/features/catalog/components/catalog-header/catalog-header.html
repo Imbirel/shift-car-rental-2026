@@ -1,0 +1,150 @@
+<header class="catalog-header">
+  <search tuiSearch>
+    <tui-textfield [tuiTextfieldCleaner]="false">
+      <label tuiLabel for="id-calender-range">Выберите период аренды</label>
+      <input
+        tuiInputDateRange
+        id="id-calender-range"
+        [(ngModel)]="store.dateRange"
+        [min]="today"
+        class="date-range-field"
+      />
+      <tui-calendar-range *tuiDropdown />
+    </tui-textfield>
+
+    <tui-textfield iconStart="@tui.search" class="search-field">
+      <label tuiLabel for="id-search-input">Модель машины</label>
+      <input id="id-search-input" tuiInput [(ngModel)]="store.filterFields.search" />
+    </tui-textfield>
+
+    <button tuiButton type="button" (click)="store.triggerSearch()">Найти машину</button>
+
+    <button
+      tuiIconButton
+      type="button"
+      appearance="secondary"
+      aria-label="Открыть фильтры"
+      (click)="open.set(!open())"
+    >
+      <tui-icon icon="@tui.filter" />
+    </button>
+  </search>
+</header>
+
+<tui-drawer *tuiPopup="open()" class="sidebar-container">
+  <div class="sidebar-header">
+    <h2 class="tui-text_heading-m">Фильтры</h2>
+    <button
+      appearance="icon"
+      iconStart="@tui.x"
+      tuiIconButton
+      type="button"
+      (click)="open.set(false)"
+    >
+      Close
+    </button>
+  </div>
+
+  <div class="sidebar-content">
+    <!-- Марка машины -->
+    <label tuiLabel for="brand-select">Марка</label>
+    <tui-textfield tuiChevron tuiDropdownMobile [stringify]="'label' | tuiStringify">
+      <input
+        id="brand-select"
+        placeholder="Выберите марку"
+        tuiComboBox
+        [(ngModel)]="store.filterFields.brand"
+      />
+      @if (brands | tuiFilterByInput; as filtered) {
+        <tui-data-list-wrapper *tuiDropdown [items]="filtered" />
+      }
+    </tui-textfield>
+
+    <!-- Тип кузова -->
+    <label tuiLabel for="body-type-select">Тип кузова</label>
+    <tui-textfield tuiChevron tuiDropdownMobile [stringify]="'label' | tuiStringify">
+      <input
+        id="body-type-select"
+        placeholder="Выберите тип кузова"
+        tuiComboBox
+        [(ngModel)]="store.filterFields.bodyType"
+      />
+      @if (bodyTypes | tuiFilterByInput; as filtered) {
+        <tui-data-list-wrapper *tuiDropdown [items]="filtered" />
+      }
+    </tui-textfield>
+
+    <!-- Руль -->
+    <label tuiLabel for="steering-select">Руль</label>
+    <tui-segmented size="l">
+      @for (option of steeringOptions; track option.value) {
+        <label>
+          <input
+            name="steering"
+            type="radio"
+            [value]="option.value"
+            [(ngModel)]="store.filterFields.steering"
+          />
+          {{ option.label }}
+        </label>
+      }
+    </tui-segmented>
+
+    <!-- Коробка передач -->
+    <label tuiLabel for="transmission-select">Коробка передач</label>
+    <tui-segmented size="l">
+      @for (option of transmissionOptions; track option.value) {
+        <label>
+          <input
+            name="transmission"
+            type="radio"
+            [value]="option.value"
+            [(ngModel)]="store.filterFields.transmission"
+          />
+          {{ option.label }}
+        </label>
+      }
+    </tui-segmented>
+
+    <!-- Стоимость (Получает границы динамически из стора) -->
+    <label tuiLabel for="price-select">Стоимость в день</label>
+    @let currency = 'RUB' | tuiCurrency;
+    <tui-input-range
+      id="price-select"
+      [min]="store.priceLimits().min"
+      [max]="store.priceLimits().max"
+      [postfix]="[currency, currency]"
+      [ngModel]="store.priceRange()"
+      (ngModelChange)="store.setPriceRange($event)"
+    />
+
+    <!-- Цвет машины -->
+    <label tuiLabel for="color-select">Цвет</label>
+    <tui-textfield tuiChevron tuiDropdownMobile [stringify]="'label' | tuiStringify">
+      <input
+        id="color-select"
+        placeholder="Выберите цвет"
+        tuiComboBox
+        [(ngModel)]="store.filterFields.color"
+      />
+
+      <tui-data-list *tuiDropdown>
+        @for (item of colors; track item.value) {
+          <button tuiOption [value]="item" class="color-dropdown-item">
+            <div class="color-circle" [style.background]="item.color"></div>
+            <span class="color-name">{{ item.label }}</span>
+          </button>
+        }
+      </tui-data-list>
+    </tui-textfield>
+  </div>
+
+  <div class="sidebar-footer">
+    <button tuiButton type="button" appearance="flat" (click)="store.resetFilters()" size="l">
+      Сбросить фильтры
+    </button>
+    <button tuiButton type="button" (click)="store.triggerSearch(); open.set(false)" size="l">
+      Найти
+    </button>
+  </div>
+</tui-drawer>

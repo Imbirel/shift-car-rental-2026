@@ -1,0 +1,23 @@
+<div tuiCardLarge class="car-card">
+  <div class="image-container">
+    @if (car().media && car().media.length > 0 && car().media[0].url) {
+      <img [src]="car().media[0].url | imageUrl" [alt]="car().name" class="car-image" />
+    } @else {
+      <div class="image-placeholder">Нет фото</div>
+    }
+  </div>
+
+  <header tuiHeader size="m" class="car-header">
+    <h3 class="tui-text_heading-s car-title">{{ car().name }}</h3>
+
+    <div class="price-tag tui-text_body-m-bold">
+      {{ car().price | currency: 'RUB' : 'symbol' : '1.0-0' }} / сутки
+    </div>
+  </header>
+
+  <footer class="car-footer">
+    <button tuiButton type="button" appearance="primary" size="s" class="action-button">
+      Выбрать
+    </button>
+  </footer>
+</div>
