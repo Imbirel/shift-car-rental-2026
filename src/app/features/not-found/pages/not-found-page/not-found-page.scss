@@ -1,0 +1,22 @@
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+
+  &__content {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  &__code {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  &__link {
+    display: inline-block;
+    text-decoration: none;
+  }
+}
