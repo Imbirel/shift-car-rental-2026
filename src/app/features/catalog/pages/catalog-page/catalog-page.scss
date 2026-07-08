@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.catalog-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+.empty-state, .error-state {
+  text-align: center;
+  padding: 64px 0;
+  width: 100%;
+}
+.empty-state { color: var(--tui-text-secondary); }
+.error-state { color: var(--tui-text-negative); }

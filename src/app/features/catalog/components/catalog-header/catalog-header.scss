@@ -1,0 +1,45 @@
+.catalog-header search {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  width: 100%;
+}
+
+.catalog-header search tui-textfield:not(.search-field) {
+  flex: 0 0 280px;
+}
+
+.catalog-header search .search-field {
+  flex-grow: 1; 
+}
+
+.catalog-header search button {
+  flex-shrink: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.color-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  transition: transform 0.2s;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 0;
+  margin-top: auto;
+}
+
+.sidebar-footer button {
+  flex: 1;
+  width: 100%;
+}

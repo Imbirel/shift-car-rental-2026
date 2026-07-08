@@ -1,0 +1,36 @@
+<header class="header-container">
+  <div class="prefix">
+    <span class="logo-emoji">🏍️</span>
+    <span class="logo-text">LEASING</span>
+  </div>
+
+  <div class="postfix">
+    <button appearance="icon" (click)="toggleTheme()" class="icon-btn">
+      @if (darkMode()) {
+        <tui-icon icon="@tui.sun" />
+      } @else {
+        <tui-icon icon="@tui.moon" />
+      }
+    </button>
+
+    @if (auth.user()) {
+      <button appearance="icon" class="icon-btn" type="button">
+        <tui-icon icon="@tui.history" />
+      </button>
+
+      <button appearance="icon" class="icon-btn" type="button" (click)="navigateToProfile()">
+        <tui-icon icon="@tui.user" />
+      </button>
+
+      <button tuiButton type="button" tuiButton (click)="onLogout()" class="auth-btn">
+        Выйти
+        <tui-icon icon="@tui.log-out" class="logout-icon" />
+      </button>
+    } @else {
+      <button tuiButton type="button" tuiButton (click)="navigateToLogin()" class="auth-btn">
+        Войти
+        <tui-icon icon="@tui.log-in" class="login-icon" />
+      </button>
+    }
+  </div>
+</header>
